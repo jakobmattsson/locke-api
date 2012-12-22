@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "underscore": "1.4.3",
+    "sinon": "1.5.2",
     "nameify": "0.1.0",
     "locke-store-mem": "0.2.0",
     "locke-store-test": "0.2.1",
