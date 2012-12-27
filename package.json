@@ -14,15 +14,13 @@
     "underscore": "1.4.3",
     "sinon": "1.5.2",
     "nameify": "0.1.0",
-    "locke-store-mem": "0.2.0",
-    "locke-store-test": "0.2.1",
+    "locke-store-mem": "0.3.0",
+    "locke-store-test": "0.3.0",
     "jscov": "0.1.0",
     "mocha-term-cov-reporter": "0.1.0",
     "should": "1.2.1",
     "mocha": "1.7.4",
     "cucumber": "0.3.0",
-    "powerfs": "0.2.3",
-    "request": "2.12.0",
     "coffee-script": "1.4.0"
   },
   "scripts": {

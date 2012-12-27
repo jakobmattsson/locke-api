@@ -3,12 +3,6 @@ crypto = require 'crypto'
 noUser = (app, email) -> new Error("There is no user with the email '#{email}' for the app '#{app}'")
 noApp = (app) -> new Error("Could not find an app with the name '#{app}'")
 
-wrappErr = (callback) ->
-  (err, rest...) ->
-    return callback(new Error(err)) if typeof err == 'string'
-    return callback(err) if err?
-    callback.apply(this, arguments)
-
 propagate = (callback, f) ->
   (err, rest...) ->
     return callback(new Error(err)) if typeof err == 'string'
@@ -36,7 +30,7 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
       return callback(new Error("The given email is already in use for this app")) if userInfo?
       return callback(new Error("Password too short - use at least #{minPasswordLength} characters")) if password.length < minPasswordLength
       return callback(new Error("Password too common - use something more unique")) if blacklistedPassword.some((x) -> x == password)
-      db.createUser app, email, { password: password, validated: false }, wrappErr callback
+      db.createUser app, email, { password: password, validated: false }, callback
 
   authPassword: (app, email, password, secondsToLive, callback) ->
     db.comparePassword app, email, password, propagate callback, (isMatch) ->
@@ -59,7 +53,7 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
     db.getUser 'locke', email, (err, userInfo) ->
       return callback(noUser('locke', email)) if !userInfo?
       compareAndValidateToken 'locke', email, 'auth', token, propagate callback, ->
-        db.createApp email, app, wrappErr callback
+        db.createApp email, app, callback
 
   getApps: (email, token, callback) ->
     db.getUser 'locke', email, (err, userInfo) ->
@@ -72,31 +66,31 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
     db.getUser app, email, propagate callback, (userInfo) ->
       return callback(noUser(app, email)) if !userInfo?
       compareAndValidateToken app, email, 'auth', token, propagate callback, ->
-        db.removeToken app, email, 'auth', token, wrappErr callback
+        db.removeToken app, email, 'auth', token, callback
 
   closeSessions: (app, email, password, callback) ->
     db.comparePassword app, email, password, propagate callback, (isMatch) ->
       return callback(new Error("Incorrect password")) if !isMatch
-      db.removeAllTokens app, email, 'auth', wrappErr callback
+      db.removeAllTokens app, email, 'auth', callback
 
   deleteUser: (app, email, password, callback) ->
     db.comparePassword app, email, password, propagate callback, (isMatch) ->
       return callback(new Error("Incorrect password")) if !isMatch
-      db.removeUser app, email, wrappErr callback
+      db.removeUser app, email, callback
 
   updatePassword: (app, email, password, newPassword, callback) ->
     db.comparePassword app, email, password, propagate callback, (isMatch) ->
       return callback(new Error("Password too short - use at least #{minPasswordLength} characters")) if newPassword.length < minPasswordLength
       return callback(new Error("Password too common - use something more unique")) if blacklistedPassword.some((x) -> x == newPassword)
       return callback(new Error("Incorrect password")) if !isMatch
-      db.setUserData app, email, { password: newPassword }, wrappErr callback
+      db.setUserData app, email, { password: newPassword }, callback
 
   deleteApp: (email, password, app, callback) ->
     db.comparePassword 'locke', email, password, propagate callback, (isMatch) ->
       return callback(new Error("Incorrect password")) if !isMatch
       db.getApps email, propagate callback, (data) ->
         return callback(noApp(app)) if !data[app]?
-        db.deleteApp app, wrappErr callback
+        db.deleteApp app, callback
 
   sendPasswordReset: (app, email, callback) ->
     db.getUser app, email, propagate callback, (userInfo) ->
@@ -105,7 +99,7 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
       tokenTimeout = secondsInTheFuture(86400)
       db.addToken app, email, 'reset', token, { timeout: tokenTimeout }, ->
         emailContent = app + " " + email + " " + token
-        emailClient.send email, emailContent, wrappErr callback
+        emailClient.send email, emailContent, callback
 
   resetPassword: (app, email, resetToken, newPassword, callback) ->
     db.getUser app, email, propagate callback, (userInfo) ->
@@ -114,7 +108,7 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
       return callback(new Error("Password too common - use something more unique")) if blacklistedPassword.some((x) -> x == newPassword)
       compareAndValidateToken app, email, 'reset', resetToken, propagate callback, ->
         db.removeAllTokens app, email, 'reset', ->
-          db.setUserData app, email, { password: newPassword }, wrappErr callback
+          db.setUserData app, email, { password: newPassword }, callback
 
   sendValidation: (app, email, callback) ->
     db.getUser app, email, propagate callback, (userInfo) ->
@@ -124,7 +118,7 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
       tokenTimeout = secondsInTheFuture(86400)
       db.addToken app, email, 'validation', token, { timeout: tokenTimeout }, ->
         emailContent = app + " " + email + " " + token
-        emailClient.send email, emailContent, wrappErr callback
+        emailClient.send email, emailContent, callback
 
   validateUser: (app, email, validationToken, callback) ->
     db.getUser app, email, propagate callback, (userInfo) ->
@@ -132,4 +126,4 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
       return callback(new Error("The user has already been validated")) if userInfo.validated
       compareAndValidateToken app, email, 'validation', validationToken, propagate callback, ->
         db.removeAllTokens app, email, 'validation', ->
-          db.setUserData app, email, { validated: true }, wrappErr callback
+          db.setUserData app, email, { validated: true }, callback
