@@ -12,9 +12,9 @@ extend = (target, rest...) ->
   target
 
 
-noUser = (app, email) -> "There is no user with the email '#{email}' for the app '#{app}'"
-noNullPassword = -> 'Password cannot be null'
-noEmptyPassword = -> 'Password must be a non-empty string'
+noUser = (app, email) -> new Error("There is no user with the email '#{email}' for the app '#{app}'")
+noNullPassword = -> new Error('Password cannot be null')
+noEmptyPassword = -> new Error('Password must be a non-empty string')
 
 
 exports.secure = (db, rounds) ->
@@ -61,7 +61,7 @@ exports.secure = (db, rounds) ->
       return callback(noNullPassword()) if !userData.password?
       return callback(noEmptyPassword()) if userData.password == '' || typeof userData.password != 'string'
 
-    return callback("Cannot set the property tokenSalt") if userData.tokenSalt?
+    return callback(new Error("Cannot set the property tokenSalt")) if userData.tokenSalt?
     if userData.password?
       bcrypt.hash userData.password, rounds, propagate callback, (hash) ->
         db.setUserData app, user, { password: hash }, callback

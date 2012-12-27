@@ -138,7 +138,11 @@ exports.factory = (lockecore, getLastEmail, clearDB) ->
     callback()
 
   step /^I should get status "([^"]*)"$/, (status, callback) ->
-    lastResult().status.should.eql status
+    if status == 'OK'
+      lastResult().status.should.eql status
+    else
+      lastResult().status.should.be.an.instanceof Error
+      lastResult().status.message.should.eql status
     callback()
 
   step /^I should get a valid token$/, (callback) ->
