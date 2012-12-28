@@ -1,5 +1,5 @@
 should = require 'should'
-lockeApi = require('./coverage').require('index')
+lockeApi = require('../coverage').require('index')
 
 mem = require 'locke-store-mem'
 core = require 'locke-store-test'

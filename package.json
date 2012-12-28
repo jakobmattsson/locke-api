@@ -1,13 +1,14 @@
 {
   "name": "locke-api",
   "description": "A generic API for a locke-implementation, dealing with access control and encryption",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "./lib/index.js",
   "author": "Jakob Mattsson <jakob.mattsson@gmail.com> (jakobmattsson.se)",
   "engines": {
     "node": ">=0.6.x"
   },
   "dependencies": {
+    "introspect": "0.0.2",
     "bcrypt": "0.7.3"
   },
   "devDependencies": {
@@ -26,7 +27,7 @@
   "scripts": {
     "pretest": "coffee -co lib src",
     "prepublish": "coffee -co lib src",
-    "coverage": "jscov src .cov && SRC_DIR=.cov mocha --compilers coffee:coffee-script --reporter mocha-term-cov-reporter tests/sdl.coffee",
-    "test": "mocha --compilers coffee:coffee-script tests/sdl.coffee && cucumber-js tests/features --require tests/api.coffee"
+    "coverage": "jscov src .cov && SRC_DIR=.cov mocha --compilers coffee:coffee-script --reporter mocha-term-cov-reporter tests/mocha/*.coffee",
+    "test": "mocha --compilers coffee:coffee-script tests/mocha/*.coffee && cucumber-js tests/cucumber-features --require tests/cucumber-steps/api.coffee"
   }
 }

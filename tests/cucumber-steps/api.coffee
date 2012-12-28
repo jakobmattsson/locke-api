@@ -3,7 +3,7 @@ mem = require 'locke-store-mem'
 nameify = require 'nameify'
 
 steps = require './steps'
-api = require('./coverage').require('index')
+api = require('../coverage').require('index')
 
 apispec =
   createUser: ["app", "email", "password"]
