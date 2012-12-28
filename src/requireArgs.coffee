@@ -26,7 +26,7 @@ exports.requireStringsAndCallback = (api) ->
       fails = params.filter (param, i) -> !args[i]? || args[i].toString().trim() == ''
       return callback(new Error("Missing parameters: #{fails.join(', ')}")) if fails.length > 0
 
-      api[key].apply(api, args.concat([callback]))
+      api[key].apply(api, args.map((arg) -> arg.toString()).concat([callback]))
 
     acc[key] = renameArguments(f, allParams)
     acc
