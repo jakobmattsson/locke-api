@@ -101,8 +101,7 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
         token = createToken()
         tokenTimeout = secondsInTheFuture(86400)
         db.addToken app, email, 'reset', token, { timeout: tokenTimeout }, ->
-          emailContent = app + " " + email + " " + token
-          emailClient.send email, emailContent, callback
+          emailClient.send email, { type: 'reset', app: app, token: token }, callback
 
     resetPassword: (app, email, resetToken, newPassword, callback) ->
       db.getUser app, email, propagate callback, (userInfo) ->
@@ -120,8 +119,7 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
         token = createToken()
         tokenTimeout = secondsInTheFuture(86400)
         db.addToken app, email, 'validation', token, { timeout: tokenTimeout }, ->
-          emailContent = app + " " + email + " " + token
-          emailClient.send email, emailContent, callback
+          emailClient.send email, { type: 'validation', app: app, token: token }, callback
 
     validateUser: (app, email, validationToken, callback) ->
       db.getUser app, email, propagate callback, (userInfo) ->

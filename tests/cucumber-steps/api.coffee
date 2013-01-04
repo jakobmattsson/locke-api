@@ -24,7 +24,8 @@ apispec =
 makeEmailMock = ->
   lastEmail = null
 
-  send: (to, content, callback) ->
+  send: (to, data, callback) ->
+    content = data.app + " " + to + " " + data.token
     lastEmail = { to: to, content: content }
     callback()
 
