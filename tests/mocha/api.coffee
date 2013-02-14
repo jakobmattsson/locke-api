@@ -1,6 +1,7 @@
 should = require 'should'
 mem = require 'locke-store-mem'
-api = require('../coverage').require('index')
+jscov = require 'jscov'
+api = require jscov.cover('../..', 'lib', 'index')
 
 makeEmailMock = ->
   lastEmail = null

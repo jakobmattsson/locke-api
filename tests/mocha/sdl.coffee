@@ -1,5 +1,6 @@
 should = require 'should'
-lockeApi = require('../coverage').require('index')
+jscov = require 'jscov'
+lockeApi = require jscov.cover('../..', 'lib', 'index')
 
 mem = require 'locke-store-mem'
 core = require 'locke-store-test'

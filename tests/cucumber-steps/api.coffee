@@ -1,9 +1,10 @@
 _ = require 'underscore'
 mem = require 'locke-store-mem'
 nameify = require 'nameify'
+jscov = require 'jscov'
 
 steps = require './steps'
-api = require('../coverage').require('index')
+api = require jscov.cover('../..', 'lib', 'index')
 
 apispec =
   createUser: ["app", "email", "password"]

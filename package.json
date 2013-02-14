@@ -27,7 +27,7 @@
   "scripts": {
     "pretest": "coffee -co lib src",
     "prepublish": "coffee -co lib src",
-    "coverage": "jscov src .cov && SRC_DIR=.cov mocha --compilers coffee:coffee-script --reporter mocha-term-cov-reporter tests/mocha/*.coffee",
+    "coverage": "jscov src .cov && JSCOV=.cov mocha --compilers coffee:coffee-script --reporter mocha-term-cov-reporter tests/mocha/*.coffee",
     "test": "mocha --compilers coffee:coffee-script tests/mocha/*.coffee && cucumber-js tests/cucumber-features --require tests/cucumber-steps/api.coffee"
   }
 }
