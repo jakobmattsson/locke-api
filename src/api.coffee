@@ -21,7 +21,11 @@ exports.construct = ({ db, emailClient, blacklistedPassword }) ->
 
   compareAndValidateToken = (app, email, type, token, callback) ->
     db.compareToken app, email, type, token, propagate callback, (tt) ->
-      if tt.timeout * 1000 < new Date().getTime()
+      timeout = tt?.timeout
+      if typeof timeout != 'number'
+        callback(new Error("Token timed out (could not find a valid timeout-property)"))
+        return
+      if timeout * 1000 < new Date().getTime()
         return db.removeToken app, email, type, token, ->
           callback(new Error("Token timed out"))
       callback()
