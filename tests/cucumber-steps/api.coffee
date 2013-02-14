@@ -48,5 +48,5 @@ module.exports = ->
     emailClient: emailClient
     blacklistedPassword: ['hejsan', 'abc123']
 
-  cli = nameify(apiinstance, apispec)
+  cli = nameify.byName(apiinstance, apispec)
   steps.factory.call(this, lockeApi(cli), emailClient.getLastEmail, db.clean)

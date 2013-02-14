@@ -12,15 +12,15 @@
     "bcrypt": "0.7.3"
   },
   "devDependencies": {
-    "underscore": "1.4.3",
+    "underscore": "1.4.4",
     "sinon": "1.5.2",
-    "nameify": "0.1.0",
+    "nameify": "0.1.1",
     "locke-store-mem": "0.3.0",
     "locke-store-test": "0.3.0",
-    "jscov": "0.1.0",
+    "jscov": "0.4.1",
     "mocha-term-cov-reporter": "0.1.0",
     "should": "1.2.1",
-    "mocha": "1.7.4",
+    "mocha": "1.8.1",
     "cucumber": "0.3.0",
     "coffee-script": "1.4.0"
   },
