@@ -4,25 +4,29 @@
   "version": "0.3.3",
   "main": "./lib/index.js",
   "author": "Jakob Mattsson <jakob.mattsson@gmail.com> (jakobmattsson.se)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jakobmattsson/locke-api.git"
+  },
   "engines": {
     "node": ">= 0.6.x < 0.12"
   },
   "dependencies": {
-    "introspect": ">= 0.0.2 < 0.1",
-    "bcrypt": ">= 0.7.3 < 0.8"
+    "introspect": "^0.0.2",
+    "bcrypt": "^0.7.3"
   },
   "devDependencies": {
-    "underscore": ">= 1.4.4 < 2",
-    "sinon": ">= 1.5.2 < 2",
-    "nameify": ">= 0.1.1 < 0.2",
-    "locke-store-mem": ">= 0.3.0 < 0.4",
-    "locke-store-test": ">= 0.3.0 < 0.4",
-    "jscov": ">= 0.5.4 < 0.6",
-    "mocha-term-cov-reporter": ">= 0.1.0 < 0.2",
-    "should": ">= 1.2.1 < 2",
-    "mocha": ">= 1.8.1 < 2",
-    "jakobmattsson-cucumber": ">= 0.3.3 < 0.4",
-    "coffee-script": ">= 1.4.0 < 2"
+    "underscore": "^1.4.4",
+    "sinon": "^1.5.2",
+    "nameify": "^0.1.1",
+    "locke-store-mem": "^0.3.0",
+    "locke-store-test": "^0.3.0",
+    "jscov": "^0.5.4",
+    "mocha-term-cov-reporter": "^0.1.0",
+    "should": "^1.2.1",
+    "mocha": "^1.8.1",
+    "jakobmattsson-cucumber": "^0.3.3",
+    "coffee-script": "^1.4.0"
   },
   "scripts": {
     "pretest": "coffee -co lib src",
