@@ -1,7 +1,7 @@
 {
   "name": "locke-api",
   "description": "A generic API for a locke-implementation, dealing with access control and encryption",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "main": "./lib/index.js",
   "author": "Jakob Mattsson <jakob.mattsson@gmail.com> (jakobmattsson.se)",
   "repository": {
