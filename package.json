@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "introspect": "^0.0.2",
-    "bcrypt": "^0.7.3"
+    "bcrypt-nodejs": "^0.0.3"
   },
   "devDependencies": {
     "underscore": "^1.4.4",
@@ -32,7 +32,7 @@
   "scripts": {
     "pretest": "coffee -co lib src",
     "prepublish": "coffee -co lib src",
-    "coverage": "jscov src .cov && JSCOV=.cov mocha --compilers coffee:coffee-script/register --reporter mocha-term-cov-reporter tests/mocha/*.coffee",
-    "test": "mocha --compilers coffee:coffee-script/register tests/mocha/*.coffee && cucumber-js tests/cucumber-features --require tests/cucumber-steps/api.coffee"
+    "coverage": "jscov src .cov && JSCOV=.cov mocha --compilers coffee:coffee-script/register --reporter mocha-term-cov-reporter -t 5000 -s 1000 tests/mocha/*.coffee",
+    "test": "mocha --compilers coffee:coffee-script/register  -t 5000 -s 1000 tests/mocha/*.coffee && cucumber-js tests/cucumber-features --require tests/cucumber-steps/api.coffee"
   }
 }

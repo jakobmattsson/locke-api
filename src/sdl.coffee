@@ -1,4 +1,4 @@
-bcrypt = require 'bcrypt'
+bcrypt = require 'bcrypt-nodejs'
 
 propagate = (callback, f) ->
   (err, rest...) ->
@@ -16,7 +16,7 @@ noUser = (app, email) -> new Error("There is no user with the email '#{email}' f
 noNullPassword = -> new Error('Password cannot be null')
 noEmptyPassword = -> new Error('Password must be a non-empty string')
 
-hashPassword = (token, salt, callback) -> bcrypt.hash(token, salt, callback)
+hashPassword = (token, salt, callback) -> bcrypt.hash(token, salt, null, callback)
 comparePassword = (password, hash, callback) -> bcrypt.compare(password, hash, callback)
 genSaltSync = (rounds) -> bcrypt.genSaltSync(rounds)
 
