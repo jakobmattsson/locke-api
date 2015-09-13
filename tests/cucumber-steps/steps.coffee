@@ -125,7 +125,7 @@ exports.factory = (lockecore, getLastEmail, clearDB) ->
       callback()
 
   step /^The last email should contain "([^"]*)"$/, (content, callback) ->
-    lastEmail().should.include content
+    lastEmail().should.containEql content
     callback()
 
   step /^The last email should contain a valid token$/, (callback) ->
