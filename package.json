@@ -27,12 +27,12 @@
     "should": "^1.2.1",
     "mocha": "^1.8.1",
     "jakobmattsson-cucumber": "^0.3.3",
-    "coffee-script": "^1.4.0"
+    "coffee-script": "^1.10.0"
   },
   "scripts": {
     "pretest": "coffee -co lib src",
     "prepublish": "coffee -co lib src",
-    "coverage": "jscov src .cov && JSCOV=.cov mocha --compilers coffee:coffee-script --reporter mocha-term-cov-reporter tests/mocha/*.coffee",
-    "test": "mocha --compilers coffee:coffee-script tests/mocha/*.coffee && cucumber-js tests/cucumber-features --require tests/cucumber-steps/api.coffee"
+    "coverage": "jscov src .cov && JSCOV=.cov mocha --compilers coffee:coffee-script/register --reporter mocha-term-cov-reporter tests/mocha/*.coffee",
+    "test": "mocha --compilers coffee:coffee-script/register tests/mocha/*.coffee && cucumber-js tests/cucumber-features --require tests/cucumber-steps/api.coffee"
   }
 }
